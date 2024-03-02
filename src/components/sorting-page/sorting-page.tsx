@@ -12,7 +12,6 @@ import { DELAY_IN_MS } from "../../constants/delays";
 
 export const SortingPage: FC = () => {
   const [isLoading, setIsLoading] = useState({ ascending: false, descending: false });
-  const [symbols, setSymbols] = useState<SymbolType<number>[]>();
   const [checked, setChecked] = useState('Выбор');
 
   const createArr = () => {
@@ -22,9 +21,10 @@ export const SortingPage: FC = () => {
         state: ElementStates.Default
       }
     });
-    setSymbols(newArray);
+    return newArray;
   };
 
+ const [symbols, setSymbols] = useState<SymbolType<number>[]>(createArr());
   const selectionSort = async (symbols: SymbolType<number>[], isReverse: boolean = false) => {
     isReverse ? setIsLoading({...isLoading, descending: true}) : setIsLoading({...isLoading, ascending: true});
     for (let i = 0; i < symbols.length - 1; i++) {
@@ -120,7 +120,7 @@ export const SortingPage: FC = () => {
         <Button
           text={'Новый массив'}
           type={"button"}
-          onClick={createArr}
+          onClick={() => setSymbols(createArr())}
           extraClass={styles.button}
           disabled={isLoading.ascending || isLoading.descending}
         />

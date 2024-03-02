@@ -57,7 +57,7 @@ export const StringComponent: FC = () => {
         <Input
           onChange={handleChange}
           value={input}
-          isLimitText={true}
+          isLimitText
           maxLength={19}
           max={19}
         />

@@ -46,10 +46,10 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     <SolutionLayout title="Последовательность Фибоначчи">
      <form className={styles.form} onSubmit={handleSubmit}>
         <Input 
-        onChange={handleChange} 
-        isLimitText={true}
+        onChange={handleChange}
+        value={input}
+        isLimitText
         type={"number"}
-        maxLength={19}
         max={19}
         />
 
@@ -57,7 +57,7 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         text={'Рассчитать'}
         type={"submit"}
         isLoader={isLoading}
-        disabled={isLoading || !input}
+        disabled={!input || Number(input) > 19}
         />
       </form>
 

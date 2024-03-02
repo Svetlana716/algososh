@@ -1,5 +1,5 @@
 import { FC, useMemo, useState } from "react";
-import styles from './list.module.css'
+import styles from './list.module.css';
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 import { ElementStates, SymbolType, ExtraCircleType } from "../../types/element-states";
