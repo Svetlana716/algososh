@@ -1,0 +1,48 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 12px;
+    max-width: 952px;
+    margin: 0 auto 120px;
+}
+
+.formElement {
+    display: flex;
+    column-gap: 12px;
+}
+
+.symbolContainer {
+    display: flex;
+    column-gap: 16px;
+    margin: 0 auto;
+    justify-content: center;
+    padding: 0;
+    list-style-type: none;
+}
+
+.symbol {
+    display: flex;
+    align-items: center;
+    column-gap: 16px;
+}
+
+.input {
+    max-width: 204px;
+    min-width: 204px;
+}
+
+.button {
+    width: 100%;
+}
+
+.extraCircleTop {
+    position: absolute;
+    top: -8px;
+    left: -28px;
+}
+
+.extraCircleBottom {
+    position: absolute;
+    top: -67px;
+    left: -28px;
+}
