@@ -9,6 +9,7 @@ exports[`circle test case changing circle 1`] = `
   />
   <div
     className="circle   changing"
+    data-test-id="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -19,6 +20,7 @@ exports[`circle test case changing circle 1`] = `
   />
   <div
     className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    data-test-id="tail"
   />
 </div>
 `;
@@ -38,6 +40,7 @@ exports[`circle test case circle with circle in head 1`] = `
       />
       <div
         className="circle   default"
+        data-test-id="circle"
       >
         <p
           className="text text_type_circle text_color_input letter"
@@ -50,11 +53,13 @@ exports[`circle test case circle with circle in head 1`] = `
       />
       <div
         className="text text_type_input text_color_input mt-4 absolute tail30 element"
+        data-test-id="tail"
       />
     </div>
   </div>
   <div
     className="circle   default"
+    data-test-id="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -67,6 +72,7 @@ exports[`circle test case circle with circle in head 1`] = `
   />
   <div
     className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    data-test-id="tail"
   />
 </div>
 `;
@@ -80,6 +86,7 @@ exports[`circle test case circle with circle in tail 1`] = `
   />
   <div
     className="circle   default"
+    data-test-id="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -92,6 +99,7 @@ exports[`circle test case circle with circle in tail 1`] = `
   />
   <div
     className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    data-test-id="tail"
   >
     <div
       className="content "
@@ -101,6 +109,7 @@ exports[`circle test case circle with circle in tail 1`] = `
       />
       <div
         className="circle   default"
+        data-test-id="circle"
       >
         <p
           className="text text_type_circle text_color_input letter"
@@ -113,6 +122,7 @@ exports[`circle test case circle with circle in tail 1`] = `
       />
       <div
         className="text text_type_input text_color_input mt-4 absolute tail30 element"
+        data-test-id="tail"
       />
     </div>
   </div>
@@ -130,6 +140,7 @@ exports[`circle test case circle with head 1`] = `
   </div>
   <div
     className="circle   default"
+    data-test-id="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -142,6 +153,7 @@ exports[`circle test case circle with head 1`] = `
   />
   <div
     className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    data-test-id="tail"
   />
 </div>
 `;
@@ -155,6 +167,7 @@ exports[`circle test case circle with index 1`] = `
   />
   <div
     className="circle   default"
+    data-test-id="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -167,6 +180,7 @@ exports[`circle test case circle with index 1`] = `
   </p>
   <div
     className="text text_type_input text_color_input mt-4 absolute tail60 element"
+    data-test-id="tail"
   />
 </div>
 `;
@@ -180,6 +194,7 @@ exports[`circle test case circle with letters 1`] = `
   />
   <div
     className="circle   default"
+    data-test-id="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -192,6 +207,7 @@ exports[`circle test case circle with letters 1`] = `
   />
   <div
     className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    data-test-id="tail"
   />
 </div>
 `;
@@ -205,6 +221,7 @@ exports[`circle test case circle with tail 1`] = `
   />
   <div
     className="circle   default"
+    data-test-id="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -217,6 +234,7 @@ exports[`circle test case circle with tail 1`] = `
   />
   <div
     className="text text_type_input text_color_input mt-4 absolute tail30 string"
+    data-test-id="tail"
   >
     tail
   </div>
@@ -232,6 +250,7 @@ exports[`circle test case circle without letters 1`] = `
   />
   <div
     className="circle   default"
+    data-test-id="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -242,6 +261,7 @@ exports[`circle test case circle without letters 1`] = `
   />
   <div
     className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    data-test-id="tail"
   />
 </div>
 `;
@@ -255,6 +275,7 @@ exports[`circle test case default circle 1`] = `
   />
   <div
     className="circle   default"
+    data-test-id="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -265,6 +286,7 @@ exports[`circle test case default circle 1`] = `
   />
   <div
     className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    data-test-id="tail"
   />
 </div>
 `;
@@ -278,6 +300,7 @@ exports[`circle test case modified circle 1`] = `
   />
   <div
     className="circle   modified"
+    data-test-id="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -288,6 +311,7 @@ exports[`circle test case modified circle 1`] = `
   />
   <div
     className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    data-test-id="tail"
   />
 </div>
 `;
@@ -301,6 +325,7 @@ exports[`circle test case small circle 1`] = `
   />
   <div
     className="circle  small default"
+    data-test-id="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -311,6 +336,7 @@ exports[`circle test case small circle 1`] = `
   />
   <div
     className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    data-test-id="tail"
   />
 </div>
 `;
