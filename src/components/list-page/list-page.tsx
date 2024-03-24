@@ -31,7 +31,7 @@ export const ListPage: FC = () => {
   };
 
   const list = useMemo(() => new LinkedList<SymbolType<string | number>>(generateArray(4, 9999).map(item => {
-    return {... defaultSymbol, data: item};
+    return { ...defaultSymbol, data: item };
   })), []);
 
   const [symbols, setSymbols] = useState<SymbolType<string | number>[]>(list.toArray());
@@ -42,7 +42,7 @@ export const ListPage: FC = () => {
     setExtraCircle({ index: 0, data: value, position: 'top' });
     await setDelay(SHORT_DELAY_IN_MS);
     setExtraCircle({ index: -1, data: undefined, position: undefined });
-    list.prepend({ ... defaultSymbol, data: value, state: ElementStates.Modified });
+    list.prepend({ ...defaultSymbol, data: value, state: ElementStates.Modified });
     setValues({ value: '', index: '' });
     setSymbols([...list.toArray()]);
     await setDelay(SHORT_DELAY_IN_MS);
@@ -55,7 +55,7 @@ export const ListPage: FC = () => {
     setExtraCircle({ index: symbols.length - 1, data: value, position: 'top' });
     await setDelay(SHORT_DELAY_IN_MS);
     setExtraCircle({ index: -1, data: undefined, position: undefined });
-    list.append({ ... defaultSymbol, data: value, state: ElementStates.Modified });
+    list.append({ ...defaultSymbol, data: value, state: ElementStates.Modified });
     setValues({ value: '', index: '' });
     setSymbols([...list.toArray()]);
     await setDelay(SHORT_DELAY_IN_MS);
@@ -85,27 +85,31 @@ export const ListPage: FC = () => {
     setIsLoading({ ...isLoading, deleteFromTail: false });
   };
 
-  const handleAddItemToIndex = async () => {
+  const handleAddItemByIndex = async () => {
     setIsLoading({ ...isLoading, addByIndex: true });
-    for (let i = 0; i < Number(index); i++) {
-      setExtraCircle({ index: i, data: value, position: 'top' });
-      list.findByIndex(Number(i))!.state = ElementStates.Changing;
-      await setDelay(SHORT_DELAY_IN_MS);
-    }
-    setExtraCircle({ index: -1, data: undefined, position: undefined });
-    list.insertAt({ ... defaultSymbol, data: value, state: ElementStates.Modified }, Number(index));
     setValues({ value: '', index: '' });
-    setSymbols([...list.toArray()]);
-    for (let i = 0; i < Number(index); i++) {
+    for (let i = 0; i <= Number(index); i++) {
+      setExtraCircle({ index: i, data: value, position: 'top' });
+      await setDelay(SHORT_DELAY_IN_MS);
+      list.findByIndex(Number(i))!.state = ElementStates.Changing;
+      setSymbols([...list.toArray()]);
+    };
+    setExtraCircle({ index: -1, data: undefined, position: undefined });
+
+    for (let i = 0; i <= Number(index); i++) {
       list.findByIndex(Number(i))!.state = ElementStates.Default;
-    }
+    };
+
+    list.insertAt({ ...defaultSymbol, data: value, state: ElementStates.Modified }, Number(index));
+
     setSymbols([...list.toArray()]);
+    
     await setDelay(SHORT_DELAY_IN_MS);
     list.findByIndex(Number(index))!.state = ElementStates.Default;
     setIsLoading({ ...isLoading, addByIndex: false });
   };
 
-  const handleDeleteItemFromIndex = async () => {
+  const handleDeleteItemByIndex = async () => {
     setIsLoading({ ...isLoading, deleteByIndex: true });
     for (let i = 0; i <= Number(index); i++) {
       list.findByIndex(Number(i))!.state = ElementStates.Changing;
@@ -131,7 +135,7 @@ export const ListPage: FC = () => {
 
   const head = (index: number) => {
     if (extraCircle.index === index && extraCircle.position === 'top') {
-      return <Circle letter={extraCircle.data?.toString()} state={ElementStates.Changing} isSmall extraClass={extraCircleStyles}/>
+      return <Circle letter={extraCircle.data?.toString()} state={ElementStates.Changing} isSmall extraClass={extraCircleStyles} />
     } else if (index === 0) {
       return 'head';
     } else {
@@ -141,7 +145,7 @@ export const ListPage: FC = () => {
 
   const tail = (index: number) => {
     if (extraCircle.index === index && extraCircle.position === 'bottom') {
-      return <Circle letter={extraCircle.data?.toString()} state={ElementStates.Changing} isSmall extraClass={extraCircleStyles}/>
+      return <Circle letter={extraCircle.data?.toString()} state={ElementStates.Changing} isSmall extraClass={extraCircleStyles} />
     } else if (index === symbols.length - 1) {
       return 'tail';
     } else {
@@ -162,6 +166,7 @@ export const ListPage: FC = () => {
             isLimitText={true}
             maxLength={4}
             max={4}
+            data-test-id="inputForValue"
           />
           <Button
             text={'Добавить в head'}
@@ -170,6 +175,7 @@ export const ListPage: FC = () => {
             onClick={handleAddInHeadItem}
             isLoader={isLoading.addInHead}
             disabled={!value || isLoading.addByIndex || isLoading.deleteByIndex}
+            data-test-id="addInHeadBtn"
           />
           <Button
             text={'Добавить в tail'}
@@ -178,6 +184,7 @@ export const ListPage: FC = () => {
             onClick={handleAddInTailItem}
             isLoader={isLoading.addInTail}
             disabled={!value || isLoading.addByIndex || isLoading.deleteByIndex}
+            data-test-id="addInTailBtn"
           />
           <Button
             text={'Удалить из head'}
@@ -186,6 +193,7 @@ export const ListPage: FC = () => {
             onClick={handleDeleteFromHeadItem}
             isLoader={isLoading.deleteFromHead}
             disabled={!symbols.length || isLoading.addByIndex || isLoading.deleteByIndex}
+            data-test-id="deleteFromHeadBtn"
           />
           <Button
             text={'Удалить из tail'}
@@ -194,6 +202,7 @@ export const ListPage: FC = () => {
             onClick={handleDeleteFromTailItem}
             isLoader={isLoading.deleteFromTail}
             disabled={!symbols.length || isLoading.addByIndex || isLoading.deleteByIndex}
+            data-test-id="deleteFromTailBtn"
           />
         </div>
 
@@ -205,22 +214,25 @@ export const ListPage: FC = () => {
             onChange={handleChange}
             value={index}
             name={'index'}
+            data-test-id="inputForIndex"
           />
           <Button
             text={'Добавить по индексу'}
             extraClass={styles.button}
             type={"button"}
-            onClick={handleAddItemToIndex}
+            onClick={handleAddItemByIndex}
             isLoader={isLoading.addByIndex}
             disabled={!value || !index || Number(index) > list.getSize()}
+            data-test-id="addByIndexBtn"
           />
           <Button
             text={'Удалить по индексу'}
             extraClass={styles.button}
             type={"button"}
-            onClick={handleDeleteItemFromIndex}
+            onClick={handleDeleteItemByIndex}
             isLoader={isLoading.deleteByIndex}
             disabled={!index || !symbols.length || Number(index) >= list.getSize()}
+            data-test-id="deleteByIndexBtn"
           />
         </div>
       </form>
@@ -237,7 +249,7 @@ export const ListPage: FC = () => {
                   head={head(index)}
                   tail={tail(index)}
                 />
-                { symbols.length > 1 && <ArrowIcon/>}
+                {symbols.length > 1 && <ArrowIcon />}
               </li>
             )
           })}

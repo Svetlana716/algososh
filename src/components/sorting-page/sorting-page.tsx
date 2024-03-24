@@ -1,83 +1,39 @@
-import { FC, useState } from "react";
+import { FC, useRef, useState } from "react";
 import styles from "./sorting.module.css";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { Direction } from "../../types/direction";
 import { RadioInput } from "../ui/radio-input/radio-input";
 import { Button } from "../ui/button/button";
 import { Column } from "../ui/column/column";
-import { getRandomNumber, generateArray } from "../../utils/utils";
-import { ElementStates, SymbolType } from "../../types/element-states";
-import { swap, setDelay } from "../../utils/utils";
+import { SortingStep } from "../../types/element-states";
+import { setDelay } from "../../utils/utils";
 import { DELAY_IN_MS } from "../../constants/delays";
+import { getRandomArray, selectionSortAlgorithm, bubbleSortAlgorithm, getColumnState } from "./utils";
 
 export const SortingPage: FC = () => {
   const [isLoading, setIsLoading] = useState({ ascending: false, descending: false });
   const [checked, setChecked] = useState('Выбор');
+  const randomArray = useRef<number[]>(getRandomArray());
+  const [steps, setSteps] = useState<SortingStep[]>([{currentArray: randomArray.current, sortedElements: []}]);
+  const [currentStep, setCurrentStep] = useState(0);
 
-  const createArr = () => {
-    const newArray = generateArray(getRandomNumber(3, 17), 100).map((el) => {
-      return {
-        data: el,
-        state: ElementStates.Default
-      }
-    });
-    return newArray;
+  const handleSort = async (direction: Direction) => {
+    direction === Direction.Ascending ? setIsLoading({...isLoading, ascending: true}) : setIsLoading({...isLoading, descending: true});
+    const sortSteps = (checked === 'Выбор' ? selectionSortAlgorithm : bubbleSortAlgorithm)(randomArray.current, direction);
+    setSteps(sortSteps);
+    for (let i = 0; i < sortSteps.length; i++) {
+      await setDelay(DELAY_IN_MS);
+      setCurrentStep(i);
+    }
+    direction === Direction.Ascending ? setIsLoading({...isLoading, ascending: false}) : setIsLoading({...isLoading, descending: false});
   };
 
- const [symbols, setSymbols] = useState<SymbolType<number>[]>(createArr());
-  const selectionSort = async (symbols: SymbolType<number>[], isReverse: boolean = false) => {
-    isReverse ? setIsLoading({...isLoading, descending: true}) : setIsLoading({...isLoading, ascending: true});
-    for (let i = 0; i < symbols.length - 1; i++) {
-      let minInd = i;
-      for (let j = i + 1; j < symbols.length; j++) {
-        symbols[i].state = ElementStates.Changing;
-        symbols[j].state = ElementStates.Changing;
-        setSymbols([...symbols]);
-        await setDelay(DELAY_IN_MS);
-        const condition = isReverse ? symbols[minInd].data < symbols[j].data : symbols[minInd].data > symbols[j].data;
-        if (condition) {
-          minInd = j;
-        }
-        symbols[j].state = ElementStates.Default;
-        setSymbols([...symbols]);
-      }
-      if (minInd !== i) {
-        swap(symbols, minInd, i);
-      }
-      symbols[i].state = ElementStates.Modified;
-      symbols[i + 1].state = ElementStates.Modified;
-    }
-    isReverse ? setIsLoading({...isLoading, descending: false}) : setIsLoading({...isLoading, ascending: false});
+  const createNewArray = () => {
+    randomArray.current = getRandomArray();
+    setSteps([{currentArray: randomArray.current, sortedElements: []}]);
+    setCurrentStep(0);
   };
   
-  const bubbleSort = async (symbols: SymbolType<number>[], isReverse: boolean = false) => {
-    isReverse ? setIsLoading({...isLoading, descending: true}) : setIsLoading({...isLoading, ascending: true});
-    for (let i = 0; i < symbols.length; i++) {
-      for (let j = 0; j < symbols.length - i - 1; j++) {
-        symbols[j].state = ElementStates.Changing;
-        symbols[j + 1].state = ElementStates.Changing;
-        setSymbols([...symbols]);
-        await setDelay(DELAY_IN_MS);
-        const condition = isReverse ? symbols[j].data < symbols[j + 1].data : symbols[j].data > symbols[j + 1].data;
-        if (condition) {
-          swap(symbols, j, j + 1);
-        }
-        symbols[j].state = ElementStates.Default;
-        setSymbols([...symbols]);
-      }
-      symbols[symbols.length - 1 - i].state = ElementStates.Modified;
-    }
-    isReverse ? setIsLoading({...isLoading, descending: false}) : setIsLoading({...isLoading, ascending: false});
-  };
-
-  const handleAscendingSort = () => {
-    symbols && (checked === 'Выбор' ? selectionSort(symbols) : bubbleSort(symbols));
-  };
-
-  const handleDescendingSort = () => {
-    symbols && (checked === 'Выбор' ? selectionSort(symbols, true) : bubbleSort(symbols, true));
-  };
-
   return (
     <SolutionLayout title="Сортировка массива">
       <div className={styles.filterContainer}>
@@ -102,44 +58,42 @@ export const SortingPage: FC = () => {
             text={'По возрастанию'}
             type={"button"}
             sorting={Direction.Ascending}
-            onClick={handleAscendingSort}
+            onClick={() => handleSort(Direction.Ascending)}
             isLoader={isLoading.ascending}
             extraClass={styles.button}
-            disabled={isLoading.descending || !symbols}
+            disabled={isLoading.descending || !randomArray}
           />
           <Button
             text={'По убыванию'}
             type={"submit"}
             sorting={Direction.Descending}
-            onClick={handleDescendingSort}
+            onClick={() => handleSort(Direction.Descending)}
             isLoader={isLoading.descending}
             extraClass={styles.button}
-            disabled={isLoading.ascending || !symbols}
+            disabled={isLoading.ascending || !randomArray}
           />
         </div>
         <Button
           text={'Новый массив'}
           type={"button"}
-          onClick={() => setSymbols(createArr())}
+          onClick={createNewArray}
           extraClass={styles.button}
           disabled={isLoading.ascending || isLoading.descending}
         />
       </div>
 
-      {symbols && (
         <ul className={styles.symbolContainer}>
-          {symbols?.map((symbol, index) => {
+          {steps.length > 0 && steps[currentStep].currentArray.map((symbol, index) => {
             return (
               <li key={index}>
                 <Column
-                  index={symbol.data}
-                  state={symbol.state}
+                  index={symbol}
+                  state={getColumnState(index, steps[currentStep], currentStep, steps.length - 1)}
                 />
               </li>
             )
           })}
         </ul>
-      )}
     </SolutionLayout>
   );
 };

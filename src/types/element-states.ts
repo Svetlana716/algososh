@@ -14,3 +14,10 @@ export type ExtraCircleType = {
   data: string | number | undefined;
   position: 'top' | 'bottom' | undefined;
 };
+
+export type SortingStep = {
+  firstCheckableElement?: number;
+  secondCheckableElement?: number;
+  currentArray: number[];
+  sortedElements: number[];
+};

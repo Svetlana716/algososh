@@ -82,6 +82,7 @@ export const QueuePage: FC = () => {
           type={"submit"}
           isLoader={isLoading.add}
           disabled={limit || !input}
+          data-test-id="add"
         />
 
         <Button
@@ -90,6 +91,7 @@ export const QueuePage: FC = () => {
           onClick={handleDeleteItem}
           isLoader={isLoading.delete}
           disabled={queue.isEmpty()}
+          data-test-id="delete"
         />
 
         <Button
@@ -98,6 +100,7 @@ export const QueuePage: FC = () => {
           type={"button"}
           onClick={handleResetQueue}
           isLoader={isLoading.reset}
+          data-test-id="reset"
         />
       </form>
 

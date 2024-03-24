@@ -37,6 +37,7 @@ export const Circle: React.FC<CircleProps> = ({
         className={`${styles.circle}  ${isSmall ? styles.small : ""} ${
           styles[state]
         }`}
+        data-test-id="circle"
       >
         <p
           className={`text text_type_circle text_color_input ${styles.letter}`}
@@ -55,6 +56,7 @@ export const Circle: React.FC<CircleProps> = ({
         } ${index?.toString() ? styles.tail60 : styles.tail30} ${
           styles[typeof tail === "string" ? "string" : "element"]
         }`}
+        data-test-id="tail"
       >
         {tail}
       </div>

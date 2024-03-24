@@ -79,6 +79,7 @@ export const StackPage: FC = () => {
           type={"submit"}
           isLoader={isLoading.add}
           disabled={!input}
+          data-test-id="add"
         />
 
         <Button
@@ -87,6 +88,7 @@ export const StackPage: FC = () => {
           onClick={handleDeleteItem}
           isLoader={isLoading.delete}
           disabled={!symbols.length}
+          data-test-id="delete"
         />
 
         <Button
@@ -96,6 +98,7 @@ export const StackPage: FC = () => {
           onClick={handleResetStack}
           isLoader={isLoading.reset}
           disabled={!symbols.length}
+          data-test-id="reset"
         />
       </form>
 

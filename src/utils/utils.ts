@@ -1,9 +1,7 @@
-type arrType = { data: string | number };
-
-export const swap = (arr: arrType[], firstIndex: number, secondIndex: number): void => {
-    const temp = arr[firstIndex]?.data;
-    arr[firstIndex].data = arr[secondIndex].data;
-    arr[secondIndex].data = temp;
+export const swap = (arr: string[] | number[], firstIndex: number, secondIndex: number): void => {
+    const temp = arr[firstIndex];
+    arr[firstIndex] = arr[secondIndex];
+    arr[secondIndex] = temp;
 };
 
 export const setDelay = (ms: number) => {
