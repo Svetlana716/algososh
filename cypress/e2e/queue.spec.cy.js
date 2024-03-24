@@ -1,26 +1,31 @@
 import { ElementStyles } from "../../src/types/element-styles";
 import { SHORT_DELAY_IN_MS } from "../../src/constants/delays";
 import { createInitialItemsListForTesting } from "../utils/utils";
+import { circle, addBtn, deleteBtn, resetBtn } from "../utils/constants";
 
 const initialArray = ['1', '2', '3'];
 
 describe ('data structure stack works correctly', () => {
     beforeEach(() => {
         cy.visit('/queue');
+
+        cy.get(addBtn).as('addBtn');
+        cy.get(deleteBtn).as('deleteBtn');
+        cy.get(resetBtn).as('resetBtn');
     });
 
     it("the add button should be disabled then the input is empty", () => {
         cy.get('input').should('be.empty');
-        cy.get('[data-test-id="add"]').should('be.disabled');
+        cy.get('@addBtn').should('be.disabled');
     });
 
     it('should add the new element correctly', () => {
         cy.clock();
 
         cy.get('input').type('1').should('have.value', '1');
-        cy.get('[data-test-id="add"]').should('not.be.disabled').click();
+        cy.get('@addBtn').should('not.be.disabled').click();
 
-        cy.get('[data-test-id="circle"]').as('circles');
+        cy.get(circle).as('circles');
         cy.get('@circles').first().as('firstElement');
 
         cy.get('@firstElement')
@@ -33,7 +38,7 @@ describe ('data structure stack works correctly', () => {
         cy.get('@firstElement').should('have.css', 'border', ElementStyles.Default);
     
         cy.get('input').type('2');
-        cy.get('[data-test-id="add"]').click();
+        cy.get('@addBtn').click();
     
         cy.get('@circles').should('have.length', 7).each((item, index) => {
             if (index === 0) {
@@ -51,13 +56,13 @@ describe ('data structure stack works correctly', () => {
         cy.clock();
         createInitialItemsListForTesting(initialArray);
 
-        cy.get('[data-test-id="circle"]').as('circles');
+        cy.get(circle).as('circles');
 
         cy.get('@circles').eq(0)
         .should('contain', '1')
         .siblings().should('contain', 'head');
 
-        cy.get('[data-test-id="delete"]').should('not.be.disabled').click();
+        cy.get('@deleteBtn').should('not.be.disabled').click();
 
         cy.get('@circles').eq(0).should('have.css', 'border', ElementStyles.Changing);
 
@@ -66,7 +71,7 @@ describe ('data structure stack works correctly', () => {
         cy.get('@circles').eq(0).should('contain', '').and('not.contain', 'head').and('have.css', 'border', ElementStyles.Default);
         cy.get('@circles').eq(1).siblings().should('contain', 'head');
 
-        cy.get('[data-test-id="delete"]').should('not.be.disabled').click();
+        cy.get('@deleteBtn').should('not.be.disabled').click();
 
         cy.get('@circles').eq(1).should('have.css', 'border', ElementStyles.Changing);
 
@@ -81,7 +86,7 @@ describe ('data structure stack works correctly', () => {
         cy.clock();
         createInitialItemsListForTesting(initialArray);
 
-        cy.get('[data-test-id="circle"]').as('circles');
+        cy.get(circle).as('circles');
 
         cy.get('@circles').should('have.length', 7).each((item, index) => {
             if (index === 0) {
@@ -97,7 +102,7 @@ describe ('data structure stack works correctly', () => {
             }
         });
 
-        cy.get('[data-test-id="reset"]').should('not.be.disabled').click();
+        cy.get('@resetBtn').should('not.be.disabled').click();
 
         cy.get('@circles').each((item) => {
             cy.wrap(item).should('contain', '');

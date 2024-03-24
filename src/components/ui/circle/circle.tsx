@@ -37,7 +37,6 @@ export const Circle: React.FC<CircleProps> = ({
         className={`${styles.circle}  ${isSmall ? styles.small : ""} ${
           styles[state]
         }`}
-        data-test-id="circle"
       >
         <p
           className={`text text_type_circle text_color_input ${styles.letter}`}

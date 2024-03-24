@@ -1,11 +1,15 @@
+import { circle } from "../utils/constants";
+
 describe('fibonacci numbers are generated correctly', () => {
     beforeEach(() => {
         cy.visit('/fibonacci');
+
+        cy.get('button[type=submit]').as('submitBtn');
     });
 
     it('the button should be disabled then the input is empty', () => {
         cy.get('input').should('be.empty');
-        cy.get('button').should('be.disabled');
+        cy.get('@submitBtn').should('be.disabled');
     });
 
     it('numbers are generated correctly', () => {
@@ -16,7 +20,7 @@ describe('fibonacci numbers are generated correctly', () => {
         cy.get('input').type(input).should('have.value', input);
         cy.get('button[type=submit]').click();
 
-        cy.get('[data-test-id="circle"]').as('circles');
+        cy.get(circle).as('circles');
 
         for (let i = 2; i <= Number(input) + 1; i++) {
             cy.get('@circles')

@@ -1,13 +1,16 @@
 import { ElementStyles } from "../../src/types/element-styles";
+import { circle } from "../utils/constants";
 
 describe ('reverse string algorithm works correctly', () => {
     beforeEach(() => {
         cy.visit('/recursion');
+
+        cy.get('button[type=submit]').as('submitBtn');
     });
 
     it ('the button should be disabled then the input is empty', () => {
         cy.get('input').should('be.empty');
-        cy.get('button').should('be.disabled');
+        cy.get('@submitBtn').should('be.disabled');
     });
 
     it ('should reverse word by steps correctly and css styles is right', () => {
@@ -16,9 +19,9 @@ describe ('reverse string algorithm works correctly', () => {
         
         cy.clock();
         cy.get('input').type(input).should('have.value', input);
-        cy.get('button[type=submit]').should('not.be.disabled').click();
+        cy.get('@submitBtn').should('not.be.disabled').click();
         
-        cy.get('[data-test-id="circle"]').as('circles');
+        cy.get(circle).as('circles');
         
         cy.get('@circles')
         .should('have.length', 5)
