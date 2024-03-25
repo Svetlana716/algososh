@@ -55,6 +55,7 @@ export const Circle: React.FC<CircleProps> = ({
         } ${index?.toString() ? styles.tail60 : styles.tail30} ${
           styles[typeof tail === "string" ? "string" : "element"]
         }`}
+        data-test-id="tail"
       >
         {tail}
       </div>
