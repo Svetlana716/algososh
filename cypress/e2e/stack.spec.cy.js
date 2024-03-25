@@ -20,8 +20,6 @@ describe('data structure stack works correctly', () => {
     });
 
     it('should add the new element correctly', () => {
-        cy.clock();
-
         cy.get('input').type('1').should('have.value', '1');
         cy.get('@addBtn').should('not.be.disabled').click();
 
@@ -32,15 +30,14 @@ describe('data structure stack works correctly', () => {
         cy.get('@lastElement').should('contain', '1').and('have.css', 'border', ElementStyles.Changing);
         cy.get('@lastElement').siblings().contains('top');
 
-        cy.tick(SHORT_DELAY_IN_MS);
+        cy.wait(SHORT_DELAY_IN_MS);
 
         cy.get('@lastElement').should('have.css', 'border', ElementStyles.Default);
         
-        cy.tick(SHORT_DELAY_IN_MS);
+        cy.wait(SHORT_DELAY_IN_MS);
     });
 
     it ('elements are deleted correctly', () => {
-        cy.clock();
         createInitialItemsListForTesting(initialArray);
 
         cy.get(circle).as('circles');
@@ -53,7 +50,7 @@ describe('data structure stack works correctly', () => {
         cy.get('@lastElement').should('contain', '3').and('have.css', 'border', ElementStyles.Changing);
         cy.get('@lastElement').siblings().contains('top');
 
-        cy.tick(SHORT_DELAY_IN_MS);
+        cy.wait(SHORT_DELAY_IN_MS);
 
         cy.get('@circles').should('have.length', 2);
         cy.get('@lastElement').should('contain', '2').and('have.css', 'border', ElementStyles.Default);
@@ -61,7 +58,6 @@ describe('data structure stack works correctly', () => {
     });
 
     it ('stack clearing works correctly', () => {
-        cy.clock();
         createInitialItemsListForTesting(initialArray);
 
         cy.get(circle).as('circles');
@@ -71,7 +67,7 @@ describe('data structure stack works correctly', () => {
 
         cy.get('@resetBtn').should('not.be.disabled').click();
 
-        cy.tick(SHORT_DELAY_IN_MS);
+        cy.wait(SHORT_DELAY_IN_MS);
 
         cy.get('@circles').should('have.length', 0);
     })

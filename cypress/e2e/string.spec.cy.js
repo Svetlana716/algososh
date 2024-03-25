@@ -1,5 +1,6 @@
 import { ElementStyles } from "../../src/types/element-styles";
 import { circle } from "../utils/constants";
+import { DELAY_IN_MS } from "../../src/constants/delays";
 
 describe ('reverse string algorithm works correctly', () => {
     beforeEach(() => {
@@ -16,8 +17,7 @@ describe ('reverse string algorithm works correctly', () => {
     it ('should reverse word by steps correctly and css styles is right', () => {
         const input = '12345';
         const output = ['52341', '54321'];
-        
-        cy.clock();
+
         cy.get('input').type(input).should('have.value', input);
         cy.get('@submitBtn').should('not.be.disabled').click();
         
@@ -29,7 +29,7 @@ describe ('reverse string algorithm works correctly', () => {
             cy.wrap(item).should('contain', input[index]).and('have.css', 'border', ElementStyles.Default);
         });
 
-        cy.tick(1000);
+        cy.wait(DELAY_IN_MS);
 
         cy.get('@circles')
         .each((item, index) => {
@@ -37,7 +37,7 @@ describe ('reverse string algorithm works correctly', () => {
             cy.wrap(item).should('contain', input[index]).and('have.css', 'border', style);
         });
 
-        cy.tick(1000);
+        cy.wait(DELAY_IN_MS);
 
         cy.get('@circles')
         .each((item, index) => {
@@ -45,7 +45,7 @@ describe ('reverse string algorithm works correctly', () => {
             cy.wrap(item).should('contain', output[0][index]).and('have.css', 'border', style);
         });
 
-        cy.tick(1000);
+        cy.wait(1000);
 
         cy.get('@circles')
         .each((item, index) => {

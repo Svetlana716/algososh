@@ -4,6 +4,6 @@ export const createInitialItemsListForTesting = (array) => {
     array.map(item => {
         cy.get('input').type(item).should('have.value', item);
         cy.get('[data-test-id="add"]').click();
-        cy.tick(SHORT_DELAY_IN_MS);
+        cy.wait(SHORT_DELAY_IN_MS);
     })
 };

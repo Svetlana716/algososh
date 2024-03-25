@@ -20,8 +20,6 @@ describe ('data structure stack works correctly', () => {
     });
 
     it('should add the new element correctly', () => {
-        cy.clock();
-
         cy.get('input').type('1').should('have.value', '1');
         cy.get('@addBtn').should('not.be.disabled').click();
 
@@ -33,7 +31,7 @@ describe ('data structure stack works correctly', () => {
         .and('have.css', 'border', ElementStyles.Changing)
         .siblings().should('contain', 'head').and('contain', 'tail');
     
-        cy.tick(SHORT_DELAY_IN_MS);
+        cy.wait(SHORT_DELAY_IN_MS);
 
         cy.get('@firstElement').should('have.css', 'border', ElementStyles.Default);
     
@@ -53,7 +51,6 @@ describe ('data structure stack works correctly', () => {
     });
 
     it ('elements are deleted correctly', () => {
-        cy.clock();
         createInitialItemsListForTesting(initialArray);
 
         cy.get(circle).as('circles');
@@ -66,7 +63,7 @@ describe ('data structure stack works correctly', () => {
 
         cy.get('@circles').eq(0).should('have.css', 'border', ElementStyles.Changing);
 
-        cy.tick(SHORT_DELAY_IN_MS);
+        cy.wait(SHORT_DELAY_IN_MS);
 
         cy.get('@circles').eq(0).should('contain', '').and('not.contain', 'head').and('have.css', 'border', ElementStyles.Default);
         cy.get('@circles').eq(1).siblings().should('contain', 'head');
@@ -75,7 +72,7 @@ describe ('data structure stack works correctly', () => {
 
         cy.get('@circles').eq(1).should('have.css', 'border', ElementStyles.Changing);
 
-        cy.tick(SHORT_DELAY_IN_MS);
+        cy.wait(SHORT_DELAY_IN_MS);
 
         cy.get('@circles').eq(1).should('contain', '').and('not.contain', 'head').and('have.css', 'border', ElementStyles.Default);
         cy.get('@circles').eq(2).siblings().should('contain', 'head').and('contain', 'tail');
@@ -83,7 +80,6 @@ describe ('data structure stack works correctly', () => {
     });
 
     it ('queue clearing works correctly', () => {
-        cy.clock();
         createInitialItemsListForTesting(initialArray);
 
         cy.get(circle).as('circles');

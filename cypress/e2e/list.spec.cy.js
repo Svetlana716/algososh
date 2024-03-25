@@ -48,8 +48,6 @@ describe('data structure linked list works correctly', () => {
     });
 
     it('should add the new element in head correctly', () => {
-        cy.clock();
-
         cy.get('@inputForValue').type(value).should('have.value', value);
         cy.get('@addInHeadBtn').should('not.be.disabled').click();
 
@@ -69,7 +67,7 @@ describe('data structure linked list works correctly', () => {
             .and('have.css', 'border', ElementStyles.Changing)
             .and('have.css', 'width', '56px');
 
-        cy.tick(SHORT_DELAY_IN_MS);
+        cy.wait(SHORT_DELAY_IN_MS);
 
         cy.get('@circles').should('have.length', 5);
 
@@ -80,14 +78,12 @@ describe('data structure linked list works correctly', () => {
             .siblings(indexOfCircle).contains('0')
             .siblings(head).contains('head');
 
-        cy.tick(SHORT_DELAY_IN_MS);
+        cy.wait(SHORT_DELAY_IN_MS);
 
         cy.get('@firstCircle').should('have.css', 'border', ElementStyles.Default);
     });
 
     it('should add the new element in tail correctly', () => {
-        cy.clock();
-
         cy.get('@inputForValue').type(value).should('have.value', value);
         cy.get('@addInTailBtn').should('not.be.disabled').click();
 
@@ -107,7 +103,7 @@ describe('data structure linked list works correctly', () => {
             .and('have.css', 'border', ElementStyles.Changing)
             .and('have.css', 'width', '56px');
 
-        cy.tick(SHORT_DELAY_IN_MS);
+        cy.wait(SHORT_DELAY_IN_MS);
 
         cy.get('@circles').should('have.length', 5);
 
@@ -118,14 +114,12 @@ describe('data structure linked list works correctly', () => {
             .siblings(indexOfCircle).contains('4')
             .siblings(tail).contains('tail');
 
-        cy.tick(SHORT_DELAY_IN_MS);
+        cy.wait(SHORT_DELAY_IN_MS);
 
         cy.get('@lastCircle').should('have.css', 'border', ElementStyles.Default);
     });
 
     it('should delete the element from head correctly', () => {
-        cy.clock();
-
         cy.get('@deleteFromHeadBtn').should('not.be.disabled').click();
 
         cy.get(circle).not(extraCircle).as('circles'); // основные круги
@@ -145,7 +139,7 @@ describe('data structure linked list works correctly', () => {
             .and('have.css', 'border', ElementStyles.Changing)
             .and('have.css', 'width', '56px');
 
-        cy.tick(SHORT_DELAY_IN_MS);
+        cy.wait(SHORT_DELAY_IN_MS);
 
         cy.get('@circles').should('have.length', 3).each((item, index) => {
             cy.wrap(item)
@@ -156,8 +150,6 @@ describe('data structure linked list works correctly', () => {
     });
 
     it('should delete the element from tail correctly', () => {
-        cy.clock();
-
         cy.get('@deleteFromTailBtn').should('not.be.disabled').click();
 
         cy.get(circle).not(extraCircle).as('circles'); // основные круги
@@ -177,7 +169,7 @@ describe('data structure linked list works correctly', () => {
             .and('have.css', 'border', ElementStyles.Changing)
             .and('have.css', 'width', '56px');
 
-        cy.tick(SHORT_DELAY_IN_MS);
+        cy.wait(SHORT_DELAY_IN_MS);
 
         cy.get('@circles').should('have.length', 3).each((item, index) => {
             cy.wrap(item)
@@ -188,8 +180,6 @@ describe('data structure linked list works correctly', () => {
     });
 
     it('should add the new element by index correctly', () => {
-        cy.clock();
-
         cy.get('@inputForValue').type(value).should('have.value', value);
         cy.get('@inputForIndex').type(index).should('have.value', index);
         cy.get('@addByIndexBtn').should('not.be.disabled').click();
@@ -210,7 +200,7 @@ describe('data structure linked list works correctly', () => {
                 .siblings(head).contains(value);
 
 
-            cy.tick(SHORT_DELAY_IN_MS);
+            cy.wait(SHORT_DELAY_IN_MS);
 
             if (i < index) {
                 cy.get('@circles').eq(i).should('have.css', 'border', ElementStyles.Changing)
@@ -225,14 +215,13 @@ describe('data structure linked list works correctly', () => {
             .and('have.css', 'width', '80px')
             .siblings(indexOfCircle).contains(index);
 
-        cy.tick(SHORT_DELAY_IN_MS);
+        cy.wait(SHORT_DELAY_IN_MS);
 
         cy.get('@circles').eq(index).should('have.css', 'border', ElementStyles.Default);
 
     });
 
     it('should delete the element by index correctly', () => {
-        cy.clock();
 
         cy.get('@inputForIndex').type(index).should('have.value', index);
         cy.get('@deleteByIndexBtn').should('not.be.disabled').click();
@@ -241,12 +230,12 @@ describe('data structure linked list works correctly', () => {
 
         cy.get('@circles').should('have.length', 4);
 
-        for (let i = 0; i < index; i++) { // в цикле проходим по всем элементам, пока не дойдем до нужного индекса
+        for (let i = 0; i <= index; i++) { // в цикле проходим по всем элементам, пока не дойдем до нужного индекса
             cy.get('@circles').eq(i)
                 .should('have.css', 'border', ElementStyles.Changing)
-                .siblings(indexOfCircle).contains(i)
-
-            cy.tick(SHORT_DELAY_IN_MS);
+                .siblings(indexOfCircle).contains(i);
+                
+                cy.wait(SHORT_DELAY_IN_MS);
 
             if (i === index) {
                 cy.get(extraCircle).as('extraCircle'); // маленький доп. круг
@@ -262,8 +251,9 @@ describe('data structure linked list works correctly', () => {
                     .siblings(indexOfCircle).contains(i)
                     .siblings(tail).should('not.be.empty');
             };
-            cy.tick(SHORT_DELAY_IN_MS);
         };
+
+        cy.wait(SHORT_DELAY_IN_MS);
 
         cy.get('@circles').should('have.length', 3).each((item, index) => {
             cy.wrap(item)

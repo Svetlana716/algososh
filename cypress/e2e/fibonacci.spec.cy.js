@@ -1,4 +1,5 @@
 import { circle } from "../utils/constants";
+import { DELAY_IN_MS } from "../../src/constants/delays";
 
 describe('fibonacci numbers are generated correctly', () => {
     beforeEach(() => {
@@ -16,7 +17,6 @@ describe('fibonacci numbers are generated correctly', () => {
         const input = '5';
         const output = [1, 1, 2, 3, 5, 8];
 
-        cy.clock();
         cy.get('input').type(input).should('have.value', input);
         cy.get('button[type=submit]').click();
 
@@ -29,7 +29,7 @@ describe('fibonacci numbers are generated correctly', () => {
                     cy.wrap(item).should('contain', output[index]);
                 });
 
-            cy.tick(1000);
+            cy.wait(DELAY_IN_MS);
         };
     });
 
